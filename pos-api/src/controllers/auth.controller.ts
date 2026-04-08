@@ -18,4 +18,22 @@ export const authController = {
       },
     });
   },
+  async login(req: Request, res: Response) {
+    const { email, password } = req?.body;
+
+    const { firstName, lastName, token } = await authService?.login({
+      email,
+      password,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'User authentication successfully',
+      data: {
+        firstName,
+        lastName,
+        token,
+      },
+    });
+  },
 };

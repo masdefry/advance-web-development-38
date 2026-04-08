@@ -2,6 +2,7 @@ import { User } from '../../generated/prisma/client';
 import prisma from '../configs/prisma-client.config';
 import bcrypt from 'bcrypt';
 import { AppError } from '../utils/app-error.util';
+import { createToken } from '../utils/jwt.util';
 
 const saltRounds = 10;
 
@@ -19,7 +20,7 @@ export const authService = {
       },
     });
 
-    if (findUserByEmail) throw AppError('Email already registered', 422)
+    if (findUserByEmail) throw AppError('Email already registered', 422);
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -32,5 +33,33 @@ export const authService = {
         role,
       },
     });
+  },
+  async login({ email, password }: Pick<User, 'email' | 'password'>) {
+    const findUserByEmail = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!findUserByEmail) throw AppError('Invalid credential account', 401);
+
+    const isPasswordMatched = await bcrypt.compare(
+      password,
+      findUserByEmail?.password,
+    );
+
+    if (!isPasswordMatched) throw AppError('Invalid credential account', 401);
+
+    const token = createToken(
+      { userId: findUserByEmail?.id, role: findUserByEmail?.role },
+      'jcwdbsdpm38',
+      { expiresIn: '1d' },
+    );
+
+    return {
+      firstName: findUserByEmail?.firstName, 
+      lastName: findUserByEmail?.lastName, 
+      token
+    }
   },
 };
