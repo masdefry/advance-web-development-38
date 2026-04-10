@@ -2,10 +2,13 @@ import express, { Express, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.route';
+import { corsOptions } from './configs/cors.config';
 
 const app: Express = express();
 app.use(express.json());
-app.use(cors());
+
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
 
 app.use('/api/auth', authRouter);

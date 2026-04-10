@@ -2,9 +2,31 @@
 
 import { useState } from 'react';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
+import { useFormik } from 'formik';
+import { loginSchema } from '@/features/login/schemas/loginSchema';
+import axiosInstance from '@/utils/axiosInstance';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit: async({ email, password }) => {
+      try {
+        const res = await axiosInstance.post('/auth/login', {
+          email, 
+          password
+        });
+
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
   return (
     <div className='min-h-screen bg-gray-100 flex items-center justify-center px-4'>
@@ -23,82 +45,88 @@ export default function LoginPage() {
           Login to your account
         </h2>
 
-        {/* Email */}
-        <div className='mb-4'>
-          <label className='mb-1 block text-sm font-medium text-gray-700'>
-            Email Address
-          </label>
-          <input
-            type='email'
-            placeholder='name@company.com'
-            className='w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500'
-          />
-        </div>
-
-        {/* Password */}
-        <div className='mb-4'>
-          <label className='mb-1 block text-sm font-medium text-gray-700'>
-            Password
-          </label>
-
-          <div className='relative'>
+        <form onSubmit={formik?.handleSubmit}>
+          {/* Email */}
+          <div className='mb-4'>
+            <label className='mb-1 block text-sm font-medium text-gray-700'>
+              Email Address
+            </label>
             <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder='Enter your password'
-              className='w-full rounded-lg border border-gray-300 px-4 py-2.5 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500'
+              type='email'
+              name='email'
+              onChange={formik?.handleChange}
+              placeholder='name@company.com'
+              className='w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500'
             />
-
-            <button
-              type='button'
-              onClick={() => setShowPassword(!showPassword)}
-              className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
-            >
-              {showPassword ? (
-                <HiOutlineEyeOff className='h-5 w-5' />
-              ) : (
-                <HiOutlineEye className='h-5 w-5' />
-              )}
-            </button>
+            <p className='text-xs font-bold text-red-500'>
+              {formik?.errors?.email}
+            </p>
           </div>
-        </div>
 
-        {/* Options */}
-        <div className='mb-6 flex items-center justify-between'>
-          <label className='flex items-center gap-2 text-sm text-gray-600'>
-            <input
-              type='checkbox'
-              className='rounded border-gray-300 text-blue-600 focus:ring-blue-500'
-            />
-            Remember me
-          </label>
+          {/* Password */}
+          <div className='mb-4'>
+            <label className='mb-1 block text-sm font-medium text-gray-700'>
+              Password
+            </label>
 
-          <a
-            href='/forgot-password'
-            className='text-sm font-medium text-blue-600 hover:underline'
-          >
-            Forgot Password?
-          </a>
-        </div>
+            <div className='relative'>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name='password'
+                onChange={formik?.handleChange}
+                placeholder='Enter your password'
+                className='w-full rounded-lg border border-gray-300 px-4 py-2.5 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500'
+              />
+              <p className='text-xs font-bold text-red-500'>
+                {formik?.errors?.password}
+              </p>
 
-        {/* Button */}
-        <button className='mb-6 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition'>
-          Login →
-        </button>
+              <button
+                type='button'
+                onClick={() => setShowPassword(!showPassword)}
+                className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600'
+              >
+                {showPassword ? (
+                  <HiOutlineEyeOff className='h-5 w-5' />
+                ) : (
+                  <HiOutlineEye className='h-5 w-5' />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Options */}
+          <div className='mb-6 flex items-center justify-between'>
+            <label className='flex items-center gap-2 text-sm text-gray-600'>
+              <input
+                type='checkbox'
+                className='rounded border-gray-300 text-blue-600 focus:ring-blue-500'
+              />
+              Remember me
+            </label>
+
+            <a
+              href='/forgot-password'
+              className='text-sm font-medium text-blue-600 hover:underline'
+            >
+              Forgot Password?
+            </a>
+          </div>
+
+          {/* Button */}
+          <button className='mb-6 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition'>
+            Login →
+          </button>
+        </form>
 
         {/* Footer */}
         <div className='flex items-center justify-between text-xs text-gray-400'>
           <span>SkyPOS Enterprise v2.4.1</span>
           <div className='flex gap-4'>
-            <a
-              href='#'
-              className='hover:text-gray-600'
-            >
+            <a href='#' className='hover:text-gray-600'>
               Support
             </a>
-            <a
-              href='#'
-              className='hover:text-gray-600'
-            >
+            <a href='#' className='hover:text-gray-600'>
               Privacy
             </a>
           </div>
