@@ -5,23 +5,33 @@ import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import { useFormik } from 'formik';
 import { loginSchema } from '@/features/login/schemas/loginSchema';
 import axiosInstance from '@/utils/axiosInstance';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const { setAuth } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useRouter();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: loginSchema,
-    onSubmit: async({ email, password }) => {
+    onSubmit: async ({ email, password }) => {
       try {
         const res = await axiosInstance.post('/auth/login', {
-          email, 
-          password
+          email,
+          password,
         });
 
-        console.log(res);
+        setAuth({
+          firstName: res?.data?.data?.firstName,
+          lastName: res?.data?.data?.lastName,
+          role: res?.data?.data?.role,
+        });
+
+        navigate.push('/dashboard');
       } catch (error) {
         console.log(error);
       }

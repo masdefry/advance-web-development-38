@@ -1,3 +1,6 @@
+'use client'; 
+
+import { useAuthStore } from '@/stores/useAuthStore';
 import {
   FiHome,
   FiShoppingCart,
@@ -23,6 +26,8 @@ const menuAdmin = [
 ];
 
 export default function SideBar() {
+  const { user } = useAuthStore();
+
   return (
     <aside className='flex h-screen flex-col border-r border-gray-100 bg-white'>
       {/* Logo */}
@@ -85,8 +90,10 @@ export default function SideBar() {
             className='h-10 w-10 rounded-full'
           />
           <div className='flex-1'>
-            <p className='text-sm font-semibold text-gray-800'>Alex Johnson</p>
-            <p className='text-xs text-gray-500'>Store Manager</p>
+            <p className='text-sm font-semibold text-gray-800'>
+              {user?.firstName} {user?.lastName}
+            </p>
+            <p className='text-xs text-gray-500'>{user?.role}</p>
           </div>
           <button className='text-gray-400 hover:text-gray-600'>
             <FiMoreVertical />

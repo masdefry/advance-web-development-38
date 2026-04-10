@@ -21,7 +21,7 @@ export const authController = {
   async login(req: Request, res: Response) {
     const { email, password } = req?.body;
 
-    const { firstName, lastName, token } = await authService?.login({
+    const { firstName, lastName, token, role } = await authService?.login({
       email,
       password,
     });
@@ -39,6 +39,7 @@ export const authController = {
       data: {
         firstName,
         lastName,
+        role
       },
     });
   },

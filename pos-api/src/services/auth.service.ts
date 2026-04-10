@@ -73,6 +73,7 @@ export const authService = {
       firstName: findUserByEmail?.firstName,
       lastName: findUserByEmail?.lastName,
       token,
+      role: findUserByEmail?.role
     };
   },
 };
