@@ -26,13 +26,19 @@ export const authController = {
       password,
     });
 
+    res.cookie('token', token, {
+      httpOnly: true, 
+      secure: true, 
+      sameSite: 'lax', 
+      path: '/'
+    });
+
     res.status(200).json({
       success: true,
       message: 'User authentication successfully',
       data: {
         firstName,
         lastName,
-        token,
       },
     });
   },

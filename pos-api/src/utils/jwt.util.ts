@@ -7,3 +7,10 @@ export function createToken(
 ){
     return jwt.sign(payload, secretKey, options);
 }
+
+export function verifyToken(
+    token: string, 
+    secretKey: string
+){
+    return jwt.verify(token, secretKey);
+}

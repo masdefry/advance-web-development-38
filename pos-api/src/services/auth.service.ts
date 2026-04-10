@@ -3,6 +3,12 @@ import prisma from '../configs/prisma-client.config';
 import bcrypt from 'bcrypt';
 import { AppError } from '../utils/app-error.util';
 import { createToken } from '../utils/jwt.util';
+import transporter from '../configs/nodemailer.config';
+import fs from 'fs';
+import path from 'path';
+import Handlebars from 'handlebars';
+import { JWT_TOKEN_SECRET_KEY } from '../configs/dotenv.config';
+import { mailService } from './mail.service';
 
 const saltRounds = 10;
 
@@ -33,6 +39,13 @@ export const authService = {
         role,
       },
     });
+
+    await mailService?.sendMail(
+      'reset-password.html',
+      { firstName, lastName },
+      email,
+      'Welcome New Employee'
+    );
   },
   async login({ email, password }: Pick<User, 'email' | 'password'>) {
     const findUserByEmail = await prisma.user.findFirst({
@@ -52,14 +65,14 @@ export const authService = {
 
     const token = createToken(
       { userId: findUserByEmail?.id, role: findUserByEmail?.role },
-      'jcwdbsdpm38',
+      JWT_TOKEN_SECRET_KEY!,
       { expiresIn: '1d' },
     );
 
     return {
-      firstName: findUserByEmail?.firstName, 
-      lastName: findUserByEmail?.lastName, 
-      token
-    }
+      firstName: findUserByEmail?.firstName,
+      lastName: findUserByEmail?.lastName,
+      token,
+    };
   },
 };
