@@ -14,15 +14,13 @@ export const menusService = {
       },
     });
 
-    console.log(createdProduct);
-
-    /*
-        [
-            { url: 'IMG-MENU-1776158952381-61465898.jpg', productId: createdProduct?.id }, 
-            { url: 'IMG-MENU-1776158952384-191494163.jpg', productId: createdProduct?.id }, 
-        ]
-    */
-    console.log(files);
-    await prisma.productImage.createMany;
+    files?.forEach(async (file: any) => {
+      await prisma.productImage.create({
+        data: {
+          url: file?.filename,
+          productId: createdProduct?.id,
+        },
+      });
+    });
   },
 };
