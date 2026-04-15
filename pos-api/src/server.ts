@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.route';
 import { corsOptions } from './configs/cors.config';
 import menusRouter from './routes/menus.route';
+import categoriesRouter from './routes/categories.route';
 
 const app: Express = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
 app.use('/api/menus', menusRouter);
+app.use('/api/categories', categoriesRouter);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.log(error);

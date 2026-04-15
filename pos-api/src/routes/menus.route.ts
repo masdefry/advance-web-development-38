@@ -7,7 +7,7 @@ const menusRouter = Router();
 menusRouter.get('/', menusController.getAll);
 menusRouter.post(
   '/',
-  uploader('src/uploads', 'IMG-MENU', ['jpg', 'png']).array('menuImages', 3),
+  uploader('src/uploads', 'IMG-MENU', ['jpg', 'png'], 'memory').array('menuImages', 3),
   menusController.create,
 );
 menusRouter.put('/', menusController.update);

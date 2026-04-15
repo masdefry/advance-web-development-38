@@ -14,6 +14,15 @@ export const menusController = {
     }
 
     await menusService?.create(files, { name, price, categoryId });
+
+    res.status(201).json({
+      success: true,
+      message: 'Create menu successful',
+      data: {
+        name,
+        price,
+      },
+    });
   },
   update() {},
   delete() {},

@@ -8,8 +8,9 @@ export function uploader(
   directory: string,
   customFileName: string,
   allowedFileTypes: string[],
+  useStorage: string
 ) {
-  const storage = multer.diskStorage({
+  const storage = useStorage === 'disk'? multer.diskStorage({
     destination: function (_, __, cb) {
       const mainDir = path?.join(cwd());
       cb(null, `${mainDir}/${directory}`);
@@ -20,7 +21,7 @@ export function uploader(
 
       cb(null, `${customFileName}-${uniqueSuffix}.${extensionFile}`);
     },
-  });
+  }) : multer.memoryStorage()
 
   function fileFilter(
     req: Request,
