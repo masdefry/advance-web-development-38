@@ -26,7 +26,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-const port = 8000;
+const port = 8001;
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

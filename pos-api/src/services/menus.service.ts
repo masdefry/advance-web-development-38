@@ -33,10 +33,43 @@ export const menusService = {
 
       const productImageData = await Promise.all(cloudinaryUploaded);
 
-      console.log(productImageData);
       await tx.productImage.createMany({
         data: productImageData,
       });
+    });
+  },
+  async update(
+    files: Express.Multer.File[],
+    { name, price, categoryId }: Pick<Product, 'name' | 'price' | 'categoryId'>,
+    productId: string,
+  ) {
+    await prisma.$transaction(async (tx) => {
+      await tx.product.update({
+        data: {
+          name,
+          price,
+          categoryId,
+        },
+        where: {
+          id: productId,
+        },
+      });
+
+      const cloudinaryUploaded = files?.map(
+        async (file: Express.Multer.File) => {
+          const { secureUrl } = await cloudinaryUpload(file?.buffer);
+          return { url: secureUrl, productId };
+        },
+      );
+
+      const productImageData = await Promise.all(cloudinaryUploaded);
+
+      tx.productImage.updateMany({
+        data: productImageData, 
+        where: {
+          productId
+        }
+      })
     });
   },
 };

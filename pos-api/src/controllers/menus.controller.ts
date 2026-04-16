@@ -24,6 +24,22 @@ export const menusController = {
       },
     });
   },
-  update() {},
+  async update(req: Request, res: Response) {
+    const { name, price, categoryId } = req?.body;
+    const { productId } = req?.params;
+    let files: Express.Multer.File[] = [];
+
+    if (Array.isArray(req?.files)) {
+      files = req?.files;
+    } else {
+      files = [];
+    }
+
+    await menusService?.update(
+      files,
+      { name, price, categoryId },
+      productId as string,
+    );
+  },
   delete() {},
 };

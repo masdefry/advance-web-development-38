@@ -13,14 +13,28 @@ export default function CreateNewMenuPage() {
       categoryId: '',
       images: [] as File[],
     },
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async({name, price, categoryId, images}) => {
+      try {
+        const fd = new FormData(); 
+        fd.append('name', name);
+        fd.append('price', price.toString());
+        fd.append('categoryId', categoryId);
+        images?.forEach((image) => {
+          fd.append('menuImages', image)
+        });
+
+        await axiosInstance.post('/menus', fd);
+
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   const onGetCategories = async () => {
     try {
       const res = await axiosInstance.get('/categories');
+      console.log(res)
       setCategories(res?.data?.data);
     } catch (error) {
       console.log(error);

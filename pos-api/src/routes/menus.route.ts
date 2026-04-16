@@ -7,10 +7,17 @@ const menusRouter = Router();
 menusRouter.get('/', menusController.getAll);
 menusRouter.post(
   '/',
-  uploader('src/uploads', 'IMG-MENU', ['jpg', 'png'], 'memory').array('menuImages', 3),
+  uploader('src/uploads', 'IMG-MENU', ['jpg', 'png'], 'memory').array(
+    'menuImages',
+    3,
+  ),
   menusController.create,
 );
-menusRouter.put('/', menusController.update);
+menusRouter.put(
+  '/:productId',
+  uploader('', 'IMG-MENU', ['jpg', 'png'], 'memory').array('menuImages', 3),
+  menusController.update,
+);
 menusRouter.delete('/', menusController.delete);
 
 export default menusRouter;
