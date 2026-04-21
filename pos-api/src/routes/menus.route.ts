@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { menusController } from '../controllers/menus.controller';
 import { uploader } from '../middlewares/uploader.middleware';
+import { updateMenusValidator } from '../validators/update-menus.validator';
+import { expressRequestValidation } from '../middlewares/express-validation.middleware';
 
 const menusRouter = Router();
 
@@ -16,6 +18,8 @@ menusRouter.post(
 menusRouter.put(
   '/:productId',
   uploader('', 'IMG-MENU', ['jpg', 'png'], 'memory').array('menuImages', 3),
+  updateMenusValidator, 
+  expressRequestValidation, 
   menusController.update,
 );
 menusRouter.delete('/', menusController.delete);

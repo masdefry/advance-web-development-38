@@ -40,6 +40,16 @@ export const menusController = {
       { name, price, categoryId },
       productId as string,
     );
+
+    res.status(200).json({
+      success: true,
+      message: `Update product with id = ${productId} successful`,
+      data: {
+        name,
+        price,
+        categoryId,
+      },
+    });
   },
   delete() {},
 };
