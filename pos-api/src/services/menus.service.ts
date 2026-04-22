@@ -1,6 +1,8 @@
 import { Product } from '../../generated/prisma/client';
 import prisma from '../configs/prisma-client.config';
+import redisConfig from '../configs/redis.config';
 import { cloudinaryUpload } from '../utils/cloudinary.util';
+const cacheKey = 'products:all';
 
 export const menusService = {
   async create(
@@ -65,11 +67,25 @@ export const menusService = {
       const productImageData = await Promise.all(cloudinaryUploaded);
 
       tx.productImage.updateMany({
-        data: productImageData, 
+        data: productImageData,
         where: {
-          productId
-        }
-      })
+          productId,
+        },
+      });
     });
+  },
+
+  async getAll() {
+    const cacheProducts = await redisConfig.get(cacheKey);
+    if (cacheProducts) {
+      const products = JSON.parse(cacheProducts);
+      return products
+    }
+
+    const products = await prisma.product.findMany();
+
+    await redisConfig.set(cacheKey, JSON.stringify(products));
+
+    return products
   },
 };

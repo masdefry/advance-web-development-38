@@ -7,6 +7,7 @@ import menusRouter from './routes/menus.route';
 import categoriesRouter from './routes/categories.route';
 import { log } from './utils/logger.util';
 import transactionsRouter from './routes/transactions.route';
+import { expiryTransactionsJob } from './jobs/transactions/expiry-transactions.job';
 
 const app: Express = express();
 app.use(express.json());
@@ -14,6 +15,8 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
+
+expiryTransactionsJob();
 
 app.use('/api/auth', authRouter);
 app.use('/api/menus', menusRouter);

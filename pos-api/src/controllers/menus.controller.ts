@@ -2,7 +2,15 @@ import { Request, Response } from 'express';
 import { menusService } from '../services/menus.service';
 
 export const menusController = {
-  getAll() {},
+  async getAll(req: Request, res: Response) {
+    const products = await menusService.getAll();
+
+    res.status(200).json({
+      success: true, 
+      message: 'Get products successful', 
+      data: products
+    })
+  },
   async create(req: Request, res: Response) {
     let files: Express.Multer.File[] = [];
     const { name, price, categoryId } = req?.body;

@@ -58,7 +58,7 @@ export const transactionsService = {
         totalPrice,
         totalItem,
         cashierId: userId,
-        expiredAt: addMinutes(new Date(), 10),
+        expiredAt: addMinutes(new Date(), 1),
       },
     });
 
