@@ -5,7 +5,6 @@ export const corsOptions = {
     origin: string | undefined,
     callback: (err: Error | null, allow?: boolean) => void,
   ) {
-    console.log(origin);
     if (!CORS_WHITELIST?.includes(origin!)) {
       callback(new Error('Origin not allowed by CORS'));
     } else {

@@ -1,0 +1,32 @@
+[2026-04-22 13:42:49] ERROR: POST /api/transactions - Something went wrong  {
+  "statusCode": 500,
+  "name": "TypeError",
+  "stack": "TypeError: Cannot destructure property 'userId' of 'res.locals.payload' as it is undefined.\n    at D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\src\\controllers\\transactions.controller.ts:6:13\n    at Generator.next (<anonymous>)\n    at D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\src\\controllers\\transactions.controller.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\src\\controllers\\transactions.controller.ts:4:12)\n    at create (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\src\\controllers\\transactions.controller.ts:15:16)\n    at Layer.handleRequest (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\router\\index.js:435:11)",
+  "body": {
+    "customerName": "Immanuel",
+    "paymentMethod": "CASH",
+    "transactionDetails": [
+      {
+        "productId": "cmnzpz0ud0001toyw2hwhjrsf",
+        "quantity": 2
+      },
+      {
+        "productId": "cmnzptao80001to0kb1pctpr1",
+        "quantity": 1
+      }
+    ]
+  },
+  "params": {},
+  "query": {},
+  "headers": {
+    "content-type": "application/json",
+    "user-agent": "PostmanRuntime/7.53.0",
+    "accept": "*/*",
+    "postman-token": "f7d91c1d-01c5-4557-b006-6e1bc6f23c9b",
+    "host": "localhost:8002",
+    "accept-encoding": "gzip, deflate, br",
+    "connection": "keep-alive",
+    "content-length": "240",
+    "cookie": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzkzNThlNC1jZDgyLTQ1ODgtOTU5My03ODU0ZmM4ZDVmZGYiLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NzY4Mzk5ODIsImV4cCI6MTc3NjkyNjM4Mn0.ZO848-GUjJMzA4QVPUBT3WWpJi-4b6f-L0kzKa0A6Iw"
+  }
+}

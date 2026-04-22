@@ -1,0 +1,22 @@
+[2026-04-21 14:13:53] ERROR: PUT /api/menus/cmnzpz0ud0001toyw2hwhjrsf - Something went wrong  {
+  "statusCode": 500,
+  "name": "PrismaClientKnownRequestError",
+  "stack": "PrismaClientKnownRequestError: \nInvalid `tx.product.update()` invocation in\nD:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\src\\services\\menus.service.ts:47:24\n\n  44   productId: string,\n  45 ) {\n  46   await prisma.$transaction(async (tx) => {\n→ 47     await tx.product.update(\nForeign key constraint violated on the constraint: `products_categoryId_fkey`\n    at ei.handleRequestError (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:228:13)\n    at ei.handleAndLogRequestError (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:174:12)\n    at ei.request (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\@prisma\\client\\src\\runtime\\RequestHandler.ts:143:12)\n    at async a (D:\\Workspace\\purwadhika\\web-development-class\\web-development-38\\advance\\pos-api\\node_modules\\@prisma\\client\\src\\runtime\\getPrismaClient.ts:833:24)",
+  "body": {
+    "name": "Milo Latte",
+    "price": "25000",
+    "categoryId": "cmnydofgu0000to34arl9zgt777"
+  },
+  "params": {},
+  "query": {},
+  "headers": {
+    "user-agent": "PostmanRuntime/7.53.0",
+    "accept": "*/*",
+    "postman-token": "70e7bf1b-38f1-419d-8e3d-254d2f2ac060",
+    "host": "localhost:8001",
+    "accept-encoding": "gzip, deflate, br",
+    "connection": "keep-alive",
+    "content-type": "multipart/form-data; boundary=--------------------------441713170204549800908759",
+    "content-length": "256347"
+  }
+}
